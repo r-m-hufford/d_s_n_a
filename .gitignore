@@ -1,0 +1,10 @@
+# Java
+*.class
+
+# Build directories
+bin/
+target/
+out/
+
+.DS_Store
+.vscode
