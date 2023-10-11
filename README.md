@@ -1,4 +1,4 @@
-# Data Structures and Algorithms
+# 🧐 Data Structures and Algorithms 🤓
 
 The purpose of this project is twofold...
 
