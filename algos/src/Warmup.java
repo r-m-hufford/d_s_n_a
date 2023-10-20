@@ -38,4 +38,37 @@ public class Warmup {
 
     return sum;
   }
+
+  public static int diagonalDifference(List<List<Integer>> arr) {
+    int diag1 = 0;
+    int diag2 = 0;
+
+    for (int i = 0, j = arr.size() - 1; i < arr.size(); i++, j--) {
+      List<Integer> currentArray = arr.get(i);
+      diag1 += currentArray.get(i);
+      diag2 += currentArray.get(j);
+    }
+    return Math.abs(diag1 - diag2);
+  }
+
+  public static double[] plusMinus(List<Integer> arr) {
+    double len = arr.size();
+    double posCount = 0;
+    double negCount = 0;
+    double zeroCount = 0;
+
+    for (int i = 0; i < len; i++) {
+      if (arr.get(i) > 0) {
+        posCount++;
+      } else if (arr.get(i) < 0) {
+        negCount++;
+      } else {
+        zeroCount++;
+      }
+    }
+
+    double[] dbls = { posCount, negCount, zeroCount };
+
+    return dbls;
+  }
 }
