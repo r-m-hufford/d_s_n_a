@@ -1,6 +1,7 @@
 public class LinkedList {
   private Node head;
   private Node tail;
+  private int size;
 
   private class Node {
     public int data;
@@ -14,12 +15,70 @@ public class LinkedList {
   public LinkedList(int data) {
     this.head = new Node(data);
     this.tail = head;
+    this.size = 1;
   }
 
-  public void add(int data) {
+  // INSERTION
+  public void insert(int data) {
     Node node = new Node(data);
     tail.next = node;
     tail = node;
+    this.size++;
+  }
+
+  public void insertAtHead(int data) {
+    Node node = new Node(data);
+    node.next = this.head;
+    this.head = node;
+    this.size++;
+  }
+
+  public void insertAt(int index, int data) {
+    Node node = new Node(data);
+    Node originalNode = this.head;
+    int counter = 0;
+
+    if (index == 0) {
+      this.insertAtHead(data);
+      return;
+    }
+
+    if (index == this.size) {
+      this.insert(data);
+      return;
+    }
+
+    while (originalNode != null) {
+      if (counter == index - 1) {
+        node.next = originalNode.next;
+        originalNode.next = node;
+        this.size++;
+        break;
+      } else {
+        originalNode = originalNode.next;
+        counter++;
+      }
+    }
+    return;
+  }
+
+  // DELETION
+  public void clear() {
+    Node currentNode = this.head;
+
+    while (currentNode != null) {
+      // store current node.net
+      // delete current node .data and .next
+    }
+  }
+
+  public void deleteNode(int index) {
+  }
+
+  // TRAVERSAL
+
+  public int size() {
+    return 0;
   }
 
   public void print() {
@@ -51,8 +110,6 @@ public class LinkedList {
     return false;
   }
 
-  // get(index)
-  // traverse from start to count
   public int get(int index) {
     if (index == 0) {
       return head.data;
@@ -73,19 +130,17 @@ public class LinkedList {
     return this.tail.data;
   }
 
-  public void clear() {
-    Node currentNode = this.head;
-
-    while (currentNode != null) {
-      // store current node.net
-      // delete current node .data and .next
+  public int indexOf(int value) {
+    Node node = this.head;
+    int count = 0;
+    while (node != null) {
+      if (node.data == value) {
+        return count;
+      }
+      count++;
+      node = node.next;
     }
+
+    return -1;
   }
-
-  // getfirst
-
-  // getlast
-
-  // index of(value)
-  // loop throgh and find value
 }
