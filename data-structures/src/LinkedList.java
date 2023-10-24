@@ -189,7 +189,7 @@ public class LinkedList {
       for (int i = 0; i > counter; i++) {
         // go to the end and flip the reference
       }
-    
+
     }
   }
 
