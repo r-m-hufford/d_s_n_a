@@ -8,7 +8,5 @@ public class App {
     linkedList.insert(9);
     System.out.println(linkedList.toString());
 
-    linkedList.insertAt(3, 11);
-    System.out.println(linkedList.toString());
   }
 }
