@@ -8,5 +8,8 @@ public class App {
     linkedList.insert(9);
     System.out.println(linkedList.toString());
 
+    linkedList.reverse();
+    System.out.println(linkedList.toString());
+
   }
 }

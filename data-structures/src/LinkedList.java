@@ -181,16 +181,19 @@ public class LinkedList {
 
   // REVERSAL
   public void reverse() {
-    Node current;
-    Node previous;
-    int counter = this.size;
+    Node current = this.head;
+    Node previous = null;
+    Node next = null;
 
-    while (counter > 0) {
-      for (int i = 0; i > counter; i++) {
-        // go to the end and flip the reference
-      }
+    while (current != null) {
+      next = current.next;
+      current.next = previous;
 
+      previous = current;
+      current = next;
     }
+
+    this.head = previous;
   }
 
   // HELPERS
