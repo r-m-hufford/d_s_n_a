@@ -18,6 +18,9 @@ public class LinkedList {
     this.size = 1;
   }
 
+  public LinkedList() {
+  }
+
   // INSERTION
   public void insert(int data) {
     Node node = new Node(data);
@@ -196,11 +199,64 @@ public class LinkedList {
     this.head = previous;
   }
 
+  // SORT - merge sort
+  public LinkedList sort() {
+    if (this.size == 1) {
+      return this;
+    }
+
+    Node middle = findMiddle(this.head);
+
+    Node leftHead = this.head;
+    Node rightHead = middle;
+
+    LinkedList left = new LinkedList();
+    left.head = leftHead;
+    left.size = calculateSize(leftHead);
+
+    LinkedList right = new LinkedList();
+    right.head = rightHead;
+    right.size = calculateSize(rightHead);
+
+    LinkedList sorted = new LinkedList(0);
+
+    if (l.data <= r.data) {
+      sorted.insert(l.data);
+    } else {
+      sorted.insert(r.data);
+    }
+    System.out.println(sorted);
+
+    System.out.println(middle.data);
+    System.out.println(end.data);
+    return this;
+  }
+
   // HELPERS
   private void checkBounds(int index) {
     if (index > this.size) {
       throw new Error("requested index is out of bounds");
     }
+  }
+
+  private Node findMiddle(Node head) {
+    if (head == null) {
+      return null;
+    }
+
+    Node slow = head;
+    Node fast = head;
+
+    while (fast.next != null && fast.next.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+
+    return slow;
+  }
+
+  private int calculateSize(Node head, Node tail) {
+    return -1;
   }
 
   public void print() {
