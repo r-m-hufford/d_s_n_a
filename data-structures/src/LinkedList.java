@@ -4,26 +4,28 @@ public class LinkedList {
   private int size;
 
   private class Node {
-    public int data;
-    public Node next;
+    private int data;
+    private Node next;
 
     public Node(int data) {
       this.data = data;
     }
   }
 
-  public LinkedList(int data) {
-    this.head = new Node(data);
-    this.tail = head;
-    this.size = 1;
-  }
-
   public LinkedList() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
   }
 
   // INSERTION
   public void insert(int data) {
     Node node = new Node(data);
+    if (this.head == null) {
+      this.head = node;
+      this.tail = node;
+      return;
+    }
     tail.next = node;
     tail = node;
     this.size++;
@@ -39,25 +41,16 @@ public class LinkedList {
   public void insertAt(int index, int data) {
     this.checkBounds(index);
     Node node = new Node(data);
-    Node initialNode = this.head;
-    int counter = 0;
 
     if (index == 0) {
       this.insertAtHead(data);
     } else if (index == this.size) {
       this.insert(data);
     } else {
-      while (initialNode != null) {
-        if (counter == index - 1) {
-          node.next = initialNode.next;
-          initialNode.next = node;
-          this.size++;
-          break;
-        } else {
-          initialNode = initialNode.next;
-          counter++;
-        }
-      }
+      Node previousNode = getNodeAt(index - 1);
+      node.next = previousNode.next;
+      previousNode.next = node;
+      this.size++;
     }
   }
 
@@ -79,25 +72,15 @@ public class LinkedList {
 
   public void deleteNode(int index) {
     this.checkBounds(index);
-    Node initialNode = this.head;
-    int counter = 0;
 
     if (index == 0) {
       this.head = this.head.next;
-      initialNode.next = null;
     } else {
-      while (initialNode != null) {
-        if (counter == index - 1) {
-          Node delete = initialNode.next;
-          initialNode.next = initialNode.next.next;
-          delete.next = null;
-          this.size--;
-          break;
-        } else {
-          initialNode = initialNode.next;
-          counter++;
-        }
-      }
+      Node previousNode = getNodeAt(index - 1);
+      Node delete = previousNode.next;
+      previousNode.next = delete.next;
+      delete.next = null;
+      this.size--;
     }
   }
 
@@ -127,10 +110,7 @@ public class LinkedList {
     if (index == 0) {
       return head.data;
     } else {
-      Node node = this.head;
-      for (int i = 0; i < index; i++) {
-        node = node.next;
-      }
+      Node node = getNodeAt(index);
       return node.data;
     }
   }
@@ -155,30 +135,18 @@ public class LinkedList {
   }
 
   public boolean isEmpty() {
-    if (size == 0)
-      return true;
-    return false;
+    return size == 0;
   }
 
   // UPDATE
   public void update(int index, int data) {
     this.checkBounds(index);
 
-    Node initialNode = this.head;
-    int counter = 0;
-
     if (index == 0) {
-      this.head.data = this.head.data;
+      this.head.data = data;
     } else {
-      while (initialNode != null) {
-        if (counter == index) {
-          initialNode.data = data;
-          break;
-        } else {
-          initialNode = initialNode.next;
-          counter++;
-        }
-      }
+      Node node = getNodeAt(index);
+      node.data = data;
     }
   }
 
@@ -204,7 +172,6 @@ public class LinkedList {
     head = mergeSort(head);
   }
 
-  // HELPERS
   public Node sortedMerge(Node a, Node b) {
     Node result = null;
 
@@ -241,9 +208,39 @@ public class LinkedList {
     return sortedList;
   }
 
+  // CONCATENATE
+  public LinkedList concatentate(LinkedList otherList) {
+    Node current = otherList.head;
+    while (current != null) {
+      this.insert(current.data);
+      current = current.next;
+    }
+    this.tail = otherList.tail;
+    this.size = this.size + otherList.size;
+    otherList.clear();
+    return this;
+  }
+
+  // MERGING
+  public void mergeLists(LinkedList otherList) {
+    this.concatentate(otherList);
+    this.sort();
+  }
+
+  // HELPERS
+
+  private Node getNodeAt(int index) {
+    this.checkBounds(index);
+    Node node = this.head;
+    for (int i = 0; i < index; i++) {
+      node = node.next;
+    }
+    return node;
+  }
+
   private void checkBounds(int index) {
     if (index > this.size) {
-      throw new Error("requested index is out of bounds");
+      throw new IndexOutOfBoundsException("Index " + index + " is out of bounds");
     }
   }
 
@@ -266,13 +263,17 @@ public class LinkedList {
   }
 
   public String toString() {
+    StringBuilder list = new StringBuilder();
     Node node = this.head;
-    String list = "";
     while (node != null) {
-      list += node.data;
+      list.append(node.data).append(", ");
       node = node.next;
     }
-    return list;
+
+    if (list.length() > 0) {
+      list.setLength(list.length() - 2);
+    }
+    return list.toString();
   }
 
 }
