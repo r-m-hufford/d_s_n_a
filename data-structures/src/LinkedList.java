@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class LinkedList {
   private Node head;
   private Node tail;
@@ -33,6 +35,11 @@ public class LinkedList {
 
   public void insertAtHead(int data) {
     Node node = new Node(data);
+    if (this.head == null) {
+      this.head = node;
+      this.tail = node;
+      return;
+    }
     node.next = this.head;
     this.head = node;
     this.size++;
@@ -97,10 +104,16 @@ public class LinkedList {
   }
 
   public int getFirst() {
+    if (this.size == 0) {
+      throw new NoSuchElementException("List is empty");
+    }
     return this.head.data;
   }
 
   public int getLast() {
+    if (this.size == 0) {
+      throw new NoSuchElementException("List is empty");
+    }
     return this.tail.data;
   }
 
@@ -216,7 +229,6 @@ public class LinkedList {
       current = current.next;
     }
     this.tail = otherList.tail;
-    this.size = this.size + otherList.size;
     otherList.clear();
     return this;
   }
