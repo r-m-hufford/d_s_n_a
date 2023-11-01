@@ -1,6 +1,11 @@
-public class App {
-  public static void main(String[] args) throws Exception {
-    System.out.println("Hello, World!");
+package com.rmhufford;
+
+import data_structures_and_algorithms.dsa.src.main.java.LinkedList;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+            System.out.println("Hello, World!");
     LinkedList linkedList = new LinkedList();
     linkedList.insert(20);
     linkedList.insert(4);
@@ -21,4 +26,5 @@ public class App {
     linkedList.mergeLists(lunkedLerst);
     System.out.println(linkedList.toString());
   }
+    }
 }
